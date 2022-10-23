@@ -14,6 +14,7 @@ const availabilityQuery = "select * from (select i.time, i.quantity - count(r.id
     "left outer join reservations r on r.\"inventoryId\" = i.id\n" +
     "where i.time between :startDate and :endDate\n" +
     "and i.\"partySize\" = :partySize\n" +
+    "and i.\"restaurantId\" = :restaurantId\n" +
     "group by i.time, i.quantity\n" +
     "order by i.time) as availability\n" +
     "where availableReservations > 0\n" +
@@ -22,6 +23,7 @@ const totalAvailabilityCount = "select count(*) as total from (select i.time, i.
     "left outer join reservations r on r.\"inventoryId\" = i.id\n" +
     "where i.time between :startDate and :endDate\n" +
     "and i.\"partySize\" = :partySize\n" +
+    "and i.\"restaurantId\" = :restaurantId\n" +
     "group by i.time, i.quantity\n" +
     "order by i.time) as availability\n" +
     "where availableReservations > 0"
@@ -40,6 +42,7 @@ export class ReservationsController {
                 "left outer join reservations r on r.\"inventoryId\" = i.id\n" +
                 "where i.time = :time\n" +
                 "and i.\"partySize\" = :partySize\n" +
+                "and i.\"restaurantId\" = :restaurantId\n" +
                 "group by i.id, i.quantity\n" +
                 "order by i.id) as availability\n" +
                 "where availableReservations > 0\n" +
@@ -47,7 +50,8 @@ export class ReservationsController {
                 {
                     replacements: {
                         time: request.time,
-                        partySize: request.partySize
+                        partySize: request.partySize,
+                        restaurantId: request.restaurantId
                     },
                     type: QueryTypes.SELECT,
                     plain: true
@@ -89,7 +93,8 @@ export class ReservationsController {
             replacements: {
                 startDate: request.date.toISOString(),
                 endDate: moment(request.date).add(1, 'd').toISOString(),
-                partySize: request.partySize
+                partySize: request.partySize,
+                restaurantId: request.restaurantId
             },
             type: QueryTypes.SELECT,
             plain: true,
@@ -101,7 +106,8 @@ export class ReservationsController {
                 endDate: moment(request.date).add(1, 'd').toISOString(),
                 partySize: request.partySize,
                 offset: request.offset,
-                pageSize: request.pageSize
+                pageSize: request.pageSize,
+                restaurantId: request.restaurantId
             },
             type: QueryTypes.SELECT,
         });

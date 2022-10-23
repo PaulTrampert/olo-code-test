@@ -6,6 +6,7 @@ export class ReservationRequest {
     partySize: number
 
     constructor(restaurantId: number, init?: Partial<ReservationRequest>) {
+        this.restaurantId = restaurantId
         Object.assign(this, init);
     }
 }

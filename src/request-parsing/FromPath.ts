@@ -3,7 +3,7 @@ export const FromPath = (parser: Function) =>
         Object.defineProperty(target, propertyName, {
             enumerable: true,
             get() {
-                return parser(this.req.query[propertyName]);
+                return parser(this.req.params[propertyName]);
             }
         })
     }
