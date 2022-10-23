@@ -1,4 +1,3 @@
-import express from 'express';
 import {initDb} from "./db";
 import {Server} from "@overnightjs/core";
 import * as controllers from './controllers/index'

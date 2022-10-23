@@ -4,10 +4,11 @@ import {Max, Min} from "class-validator";
 
 export class PagedRequest {
 
-    req: Request
-
     constructor(req: Request) {
-        this.req = req;
+        Object.defineProperty(this, 'req', {
+            enumerable: false,
+            value: req
+        })
     }
 
     @FromQuery(parseInt, 0)
