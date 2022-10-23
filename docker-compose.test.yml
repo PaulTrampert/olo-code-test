@@ -1,0 +1,24 @@
+version: "3.7"
+services:
+  db:
+    environment:
+      - POSTGRES_DB=jest
+  api:
+    image: code-test:unit-test
+    build:
+      target: unit-test
+    environment:
+      - DATABASE_CONNECTION_STRING=postgres://postgres:password@db/jest
+      - NODE_ENV=development
+      - APP_ENV=development
+      - PORT=8080
+      - LOG=debug
+      - GIT_WORK_TREE=/app
+      - GIT_DIR=/app/.git
+    depends_on:
+      - db
+    ports:
+      - "9090:8080"
+    volumes:
+      - ./:/app
+      - /app/node_modules

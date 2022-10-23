@@ -1,7 +1,6 @@
 import {IsDate, IsInt, Min} from "class-validator";
-import {IsDateOnInterval} from "../../validators";
+import {IsDateOnInterval, IsDateLaterThan} from "../../validators";
 import moment from 'moment';
-import {IsDateLaterThan} from "../../validators/IsDateLaterThan";
 
 export class AddInventoryRequest {
 

@@ -8,19 +8,18 @@ services:
     ports:
       - "5432:5432"
   api:
+    image: code-test:prod
     build:
       context: .
       dockerfile: ./Dockerfile
+      target: prod
     environment:
       - DATABASE_CONNECTION_STRING=postgres://postgres:password@db/wisely_test
-      - NODE_ENV=development
-      - APP_ENV=development
+      - NODE_ENV=production
+      - APP_ENV=production
       - PORT=8080
-      - LOG=debug
+      - LOG=info
     depends_on:
       - db
     ports:
       - "9090:8080"
-    volumes:
-      - ./:/app
-      - /app/node_modules
