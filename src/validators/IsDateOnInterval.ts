@@ -1,4 +1,4 @@
-import {registerDecorator, ValidationArguments, ValidationOptions} from "class-validator";
+import {registerDecorator, ValidationOptions} from "class-validator";
 
 export const IsDateOnInterval = (minutes: number, validationOptions?: ValidationOptions) =>
     (target: any, propName: string) => {
@@ -6,9 +6,12 @@ export const IsDateOnInterval = (minutes: number, validationOptions?: Validation
             name: 'isDateOnInterval',
             target: target.constructor,
             propertyName: propName,
-            options: validationOptions,
+            options: {
+                message: `$property must be on an interval of ${minutes} minutes`,
+                ...validationOptions
+            },
             validator: {
-                validate(value: any, args: ValidationArguments) {
+                validate(value: any) {
                     return value instanceof Date && value.getMinutes() % minutes === 0;
                 }
             }

@@ -3,10 +3,13 @@ import {registerDecorator, ValidationArguments, ValidationOptions} from "class-v
 export const IsDateLaterThan = (otherProp: string, validationOptions?: ValidationOptions) =>
     (target: any, propName: string) => {
         registerDecorator({
-            name: 'isDateOnInterval',
+            name: 'isDateLaterThan',
             target: target.constructor,
             propertyName: propName,
-            options: validationOptions,
+            options: {
+                message: "$property must be later than $constraint1",
+                ...validationOptions
+            },
             constraints: [otherProp],
             validator: {
                 validate(value: any, args: ValidationArguments) {
