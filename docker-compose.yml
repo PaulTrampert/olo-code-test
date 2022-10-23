@@ -17,8 +17,6 @@ services:
       - APP_ENV=development
       - PORT=8080
       - LOG=debug
-    stdin_open: true
-    tty: true
     depends_on:
       - db
     ports:
