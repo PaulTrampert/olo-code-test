@@ -26,7 +26,7 @@ const totalAvailabilityCount = "select count(*) as total from (select i.time, i.
     "order by i.time) as availability\n" +
     "where availableReservations > 0"
 
-@Controller("restaurants/:restaurantId/reservations")
+@Controller("restaurants/:restaurantId(\\d+)/reservations")
 @ClassOptions({mergeParams: true})
 export class ReservationsController {
 
