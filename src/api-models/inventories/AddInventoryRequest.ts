@@ -1,7 +1,7 @@
-import {Inventory} from "../../models";
 import {IsDate, IsInt, Min} from "class-validator";
 import {IsDateOnInterval} from "../../validators";
 import moment from 'moment';
+import {IsDateLaterThan} from "../../validators/IsDateLaterThan";
 
 export class AddInventoryRequest {
 
@@ -15,6 +15,7 @@ export class AddInventoryRequest {
 
     @IsDate()
     @IsDateOnInterval(15)
+    @IsDateLaterThan('startTime')
     endTime: Date
 
     @IsInt()

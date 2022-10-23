@@ -55,7 +55,7 @@ export class ReservationsController {
             );
             if (!inventory) {
                 res.status(400)
-                    .send(new ApiError("We couldn't reserve your requested time. Please try another."));
+                    .send(new ApiError("There are no available reservations your requested time. Please try another."));
                 await t.rollback();
                 return;
             }

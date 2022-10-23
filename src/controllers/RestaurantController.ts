@@ -1,9 +1,7 @@
 import {Get, Controller, Post} from "@overnightjs/core";
 import {Request, Response} from 'express';
 import {Restaurant} from "../models";
-import {CreateRestaurantRequest} from "../api-models/restaurant/CreateRestaurantRequest";
-import {PagedRequest} from "../api-models/PagedRequest";
-import {PagedResult} from "../api-models";
+import {CreateRestaurantRequest, PagedRequest, PagedResult} from "../api-models";
 import {validate} from "class-validator";
 
 @Controller("restaurants")
@@ -35,7 +33,7 @@ export class RestaurantController {
 
     @Post("")
     private async create(req: Request, res: Response) {
-        const createRestaurantRequest = req.body as CreateRestaurantRequest;
+        const createRestaurantRequest = new CreateRestaurantRequest(req.body);
         const errors = await validate(createRestaurantRequest);
         if (errors.some(() => true)) {
             res.status(400)
