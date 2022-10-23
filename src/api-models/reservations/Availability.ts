@@ -1,5 +1,4 @@
 export class Availability {
-    inventoryId: number
     time: Date
     availableReservations: number
 

@@ -8,19 +8,19 @@ import {PagedResult} from "../api-models";
 import moment from "moment";
 import {validate} from "class-validator";
 
-const availabilityQuery = "select * from (select i.id, i.time, sum(i.quantity) - count(r.id) availableReservations from inventories i\n" +
+const availabilityQuery = "select * from (select i.time, sum(i.quantity) - count(r.id) availableReservations from inventories i\n" +
     "left outer join reservations r on r.\"inventoryId\" = i.id\n" +
     "where i.time between :startDate and :endDate\n" +
     "and i.\"partySize\" = :partySize\n" +
-    "group by i.id, i.time\n" +
+    "group by i.time\n" +
     "order by i.time) as availability\n" +
     "where availableReservations > 0\n" +
     "offset :offset limit :pageSize"
-const totalAvailabilityCount = "select count(*) as total from (select i.id, i.time, sum(i.quantity) - count(r.id) availableReservations from inventories i\n" +
+const totalAvailabilityCount = "select count(*) as total from (select i.time, sum(i.quantity) - count(r.id) availableReservations from inventories i\n" +
     "left outer join reservations r on r.\"inventoryId\" = i.id\n" +
     "where i.time between :startDate and :endDate\n" +
     "and i.\"partySize\" = :partySize\n" +
-    "group by i.id, i.time\n" +
+    "group by i.time\n" +
     "order by i.time) as availability\n" +
     "where availableReservations > 0"
 
@@ -65,7 +65,6 @@ export class ReservationsController {
             pageSize: request.pageSize,
             total: parseInt((await totalCount)['total']),
             results: (await availability).map((a:any) => new Availability({
-                inventoryId: a.id,
                 time: a.time,
                 availableReservations: a.availablereservations
             }))
