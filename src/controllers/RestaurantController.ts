@@ -10,7 +10,7 @@ export class RestaurantController {
     private async list(req: Request, res: Response) {
         const request = new PagedRequest(req);
         const errors = await validate(request);
-        if (errors.some(() => true)) {
+        if (errors.length) {
             res.status(400)
                 .send(errors);
             return;
@@ -35,13 +35,12 @@ export class RestaurantController {
     private async create(req: Request, res: Response) {
         const createRestaurantRequest = new CreateRestaurantRequest(req.body);
         const errors = await validate(createRestaurantRequest);
-        if (errors.some(() => true)) {
+        if (errors.length) {
             res.status(400)
                 .send(errors);
+            return;
         }
-        const result = await Restaurant.create({
-            name: req.body.name
-        });
+        const result = await Restaurant.create(createRestaurantRequest);
 
         if (result.id > 0) {
             res.send(result);

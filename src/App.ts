@@ -19,7 +19,6 @@ export class App extends Server {
             }
         }));
         this.app.use(bodyParser.urlencoded({extended: true}));
-        this.bootstrap();
     }
 
     public start(): void {
@@ -30,8 +29,8 @@ export class App extends Server {
         });
     }
 
-    private async bootstrap() {
-        await initDb();
+    public async bootstrap({seed = true, drop = false} = {}) {
+        await initDb({seed, drop});
 
         const ctrlInstances = [];
         for (const ctrlName in controllers) {
