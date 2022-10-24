@@ -11,9 +11,9 @@ export const seed = async (drop: boolean) => {
     if (isSeeded && !drop)
         return;
     if (drop){
-        Restaurant.truncate();
-        Inventory.truncate();
-        Reservation.truncate();
+        await Restaurant.truncate();
+        await Inventory.truncate();
+        await Reservation.truncate();
     }
     let restaurants = [
         {

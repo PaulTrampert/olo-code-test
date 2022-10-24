@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test-watch": "jest --watchAll",
-    "test": "jest",
+    "test": "jest --runInBand",
     "clean": "rimraf dist/*",
     "dev": "tsc-watch --onSuccess \"node dist/index\"",
     "build": "tsc"

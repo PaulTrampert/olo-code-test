@@ -1,9 +1,8 @@
 import {App} from '../App'
 import request from 'supertest'
-import {sequelize} from '../db';
 
 describe('RestaurantController', () => {
-    let app;
+    let app: App;
     beforeEach(async () => {
         app = new App();
         await app.bootstrap({seed: true, drop: true});

@@ -118,7 +118,7 @@ export class ReservationsController {
             total: parseInt((await totalCount)['total']),
             results: (await availability).map((a:any) => new Availability({
                 time: a.time,
-                availableReservations: a.availablereservations
+                availableReservations: parseInt(a.availablereservations)
             }))
         }))
     }
